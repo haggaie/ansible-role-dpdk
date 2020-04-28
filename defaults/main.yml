@@ -1,2 +1,3 @@
 ---
 # defaults file for dpdk
+dpdk_version: 19.11.1

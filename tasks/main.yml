@@ -1,2 +1,12 @@
 ---
 # tasks file for dpdk
+- name: check dpdk version
+  shell: pkg-config libdpdk --modversion
+  register: existing_dpdk_version
+  ignore_errors: True
+
+- debug: msg="DPDK version {{existing_dpdk_version}}"
+
+- include: dpdk-install.yml
+  when: existing_dpdk_version is failed or existing_dpdk_version.stdout != dpdk_version
+

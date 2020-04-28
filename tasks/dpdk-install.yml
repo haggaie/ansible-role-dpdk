@@ -1,0 +1,22 @@
+---
+- name: dpdk repository
+  git:
+    repo: 'git://dpdk.org/dpdk-stable'
+    version: 'v{{dpdk_version}}'
+    dest: '/usr/src/dpdk'
+
+- name: pip dependencies (meson)
+  pip: name=meson
+
+- name: build dpdk
+  shell:
+    cmd: 'meson build-{{dpdk_version}}'
+    chdir: '/usr/src/dpdk'
+
+- name: install dpdk
+  shell:
+    cmd: meson install
+    chdir: '/usr/src/dpdk/build-{{dpdk_version}}'
+
+- name: update ld.so
+  shell: 'ldconfig'
