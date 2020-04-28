@@ -10,3 +10,6 @@
 - include: dpdk-install.yml
   when: existing_dpdk_version is failed or existing_dpdk_version.stdout != dpdk_version
 
+- name: Set hugepages
+  sysctl: name=vm.nr_hugepages value='{{nr_hugepages}}'
+  when: nr_hugepages is defined

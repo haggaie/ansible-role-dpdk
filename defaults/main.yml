@@ -1,3 +1,4 @@
 ---
 # defaults file for dpdk
 dpdk_version: 19.11.1
+nr_hugepages: 1024
