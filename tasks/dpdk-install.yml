@@ -8,10 +8,22 @@
 - name: pip dependencies (meson)
   pip: name=meson
 
+- name: check if build file exists
+  stat:
+    path: '/usr/src/dpdk/build-{{dpdk_version}}/build.ninja'
+  register: build_ninja
+
 - name: build dpdk
   shell:
     cmd: 'meson build-{{dpdk_version}}'
     chdir: '/usr/src/dpdk'
+  when: build_ninja.stat.exists == False
+
+- name: reconfigure dpdk
+  shell:
+    cmd: 'ninja reconfigure'
+    chdir: '/usr/src/dpdk/build-{{dpdk_version}}'
+  when: build_ninja.stat.exists == True
 
 - name: install dpdk
   shell:

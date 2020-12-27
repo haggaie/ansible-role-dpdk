@@ -1,5 +1,9 @@
 ---
 # tasks file for dpdk
+- name: install libpcap dependency # support pdump
+  package: name=libpcap0.8-dev state=present
+  register: libpcap
+
 - name: check dpdk version
   shell: pkg-config libdpdk --modversion
   register: existing_dpdk_version
@@ -8,7 +12,7 @@
 - debug: msg="DPDK version {{existing_dpdk_version}}"
 
 - include: dpdk-install.yml
-  when: existing_dpdk_version is failed or existing_dpdk_version.stdout != dpdk_version
+  when: existing_dpdk_version is failed or existing_dpdk_version.stdout != dpdk_version or libpcap.changed
 
 - name: Set hugepages
   sysctl: name=vm.nr_hugepages value='{{nr_hugepages}}'
