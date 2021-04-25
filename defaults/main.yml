@@ -1,4 +1,5 @@
 ---
 # defaults file for dpdk
-dpdk_version: 19.11.1
+dpdk_version: 20.11
+dpdk_modversion: "{{dpdk_version}}.0"
 nr_hugepages: 1024

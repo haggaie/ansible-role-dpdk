@@ -10,10 +10,10 @@
   ignore_errors: True
 
 - debug:
-    msg: "DPDK version {{existing_dpdk_version.stdout}} vs required: {{dpdk_version}}"
+    msg: "DPDK version {{existing_dpdk_version.stdout}} vs required: {{dpdk_modversion}}"
 
 - include: dpdk-install.yml
-  when: existing_dpdk_version is failed or existing_dpdk_version.stdout != dpdk_version or libpcap.changed
+  when: existing_dpdk_version is failed or existing_dpdk_version.stdout != dpdk_modversion or libpcap.changed
 
 - name: Set hugepages
   sysctl: name=vm.nr_hugepages value='{{nr_hugepages}}'
