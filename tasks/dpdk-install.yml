@@ -6,7 +6,10 @@
     dest: '/usr/src/dpdk'
 
 - name: pip dependencies (meson)
-  pip: name=meson
+  pip:
+    name:
+      - meson
+      - pyelftools
 
 - name: check if build file exists
   stat:
